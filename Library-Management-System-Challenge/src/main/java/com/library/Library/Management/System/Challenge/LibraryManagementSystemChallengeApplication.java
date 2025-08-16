@@ -33,7 +33,7 @@ public class LibraryManagementSystemChallengeApplication {
 			PasswordEncoder encoder
 	) {
 		return args -> {
-
+/*
 			// ---------------- Users ----------------
 			SystemUser admin = new SystemUser();
 			admin.setUsername("admin");
@@ -125,7 +125,7 @@ public class LibraryManagementSystemChallengeApplication {
 			transaction2.setBook(book2);
 			transaction2.setBorrowDate(LocalDate.now().minusDays(1));
 			transactionService.borrowBook(transaction2, member2.getId());
-
+*/
 			System.out.println("✅ Demo data initialized successfully!");
 		};
 	}
