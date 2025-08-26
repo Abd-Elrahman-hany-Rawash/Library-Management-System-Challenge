@@ -31,7 +31,7 @@ public class BorrowingTransaction {
 
     @ManyToOne
     @JoinColumn(name = "processed_by_user_id")
-    @JsonIgnoreProperties("activityLogs") // prevent recursion in SystemUser
+    @JsonIgnoreProperties({"activityLogs", "processedTransactions"})
     private SystemUser processedBy; // staff/librarian who processes the transaction
 
     private LocalDate borrowDate;

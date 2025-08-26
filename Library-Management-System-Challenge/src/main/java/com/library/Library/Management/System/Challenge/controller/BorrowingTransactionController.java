@@ -4,6 +4,7 @@ import com.library.Library.Management.System.Challenge.ResourceNotFoundException
 import com.library.Library.Management.System.Challenge.entity.BorrowingTransaction;
 import com.library.Library.Management.System.Challenge.service.BorrowingTransactionService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class BorrowingTransactionController {
 
     //  Member borrows a book
     @PostMapping("/borrow")
-    // @PreAuthorize("hasAnyRole('ADMIN','STAFF')") // Enable security later
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','STAFF','LIBRARIAN')") // Enable security later
     public ResponseEntity<BorrowingTransaction> borrowBook(
             @RequestParam Long memberId,
             @RequestBody BorrowingTransaction transaction
@@ -36,7 +37,7 @@ public class BorrowingTransactionController {
 
     //  Return a book by transaction ID
     @PutMapping("/{transactionId}/return")
-    // @PreAuthorize("hasAnyRole('ADMIN','STAFF')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','LIBRARIAN')")
     public ResponseEntity<?> returnBook(@PathVariable Long transactionId) {
         try {
             BorrowingTransaction transaction = transactionService.returnBook(transactionId);
@@ -54,7 +55,7 @@ public class BorrowingTransactionController {
 
     // Return a book by book ID
     @PutMapping("/return/book/{bookId}")
-    // @PreAuthorize("hasAnyRole('ADMIN','STAFF')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','LIBRARIAN')")
     public ResponseEntity<?> returnBookByBookId(@PathVariable Long bookId) {
         try {
             BorrowingTransaction transaction = transactionService.returnBookByBookId(bookId);
@@ -72,14 +73,14 @@ public class BorrowingTransactionController {
 
     //  Get all transactions of a member
     @GetMapping("/member/{memberId}")
-    // @PreAuthorize("hasAnyRole('ADMIN','STAFF','MEMBER')") /
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','STAFF','LIBRARIAN')")
     public ResponseEntity<List<BorrowingTransaction>> getTransactionsByMember(@PathVariable Long memberId) {
         return ResponseEntity.ok(transactionService.getTransactionsByMember(memberId));
     }
 
     // Get a single transaction
     @GetMapping("/{transactionId}")
-    // @PreAuthorize("hasAnyRole('ADMIN','STAFF','MEMBER')") // Enable security later
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','LIBRARIAN')") // Enable security later
     public ResponseEntity<?> getTransactionById(@PathVariable Long transactionId) {
         try {
             BorrowingTransaction transaction = transactionService.getTransactionById(transactionId);
@@ -93,7 +94,7 @@ public class BorrowingTransactionController {
 
     //  Update a transaction (extend return date etc.)\
     @PutMapping("/{transactionId}")
-    // @PreAuthorize("hasAnyRole('ADMIN','STAFF')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','LIBRARIAN')")
     public ResponseEntity<?> updateTransaction(
             @PathVariable Long transactionId,
             @RequestBody BorrowingTransaction updatedTransaction
@@ -114,7 +115,7 @@ public class BorrowingTransactionController {
 
     // Delete a transaction
     @DeleteMapping("/{transactionId}")
-    // @PreAuthorize("hasRole('ADMIN')") // Enable security later
+    @PreAuthorize("hasRole('ADMINISTRATOR')") // Enable security later
     public ResponseEntity<?> deleteTransaction(@PathVariable Long transactionId) {
         try {
             transactionService.deleteTransaction(transactionId);

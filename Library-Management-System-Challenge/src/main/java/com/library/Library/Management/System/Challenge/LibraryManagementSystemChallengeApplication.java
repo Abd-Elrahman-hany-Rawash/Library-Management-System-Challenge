@@ -33,16 +33,33 @@ public class LibraryManagementSystemChallengeApplication {
 			PasswordEncoder encoder
 	) {
 		return args -> {
-/*
+
 			// ---------------- Users ----------------
-			SystemUser admin = new SystemUser();
-			admin.setUsername("admin");
-			admin.setPassword("admin123");
-			admin.setEmail("admin@example.com");
+			/*SystemUser admin = new SystemUser();
+			admin.setUsername("admin2");
+			admin.setPassword("abdo");
+			admin.setEmail("newadmin@example.com");
 			admin.setRole(UserRole.ADMINISTRATOR);
 			admin.setLastLogin(LocalDateTime.now());
 			userService.saveUser(admin, admin);
 
+			SystemUser lib = new SystemUser();
+			lib.setUsername("librain");
+			lib.setPassword("abdo");
+			lib.setEmail("librian@example.com");
+			lib.setRole(UserRole.LIBRARIAN);
+			lib.setLastLogin(LocalDateTime.now());
+			userService.saveUser(lib, admin);
+
+			SystemUser staff = new SystemUser();
+			staff.setUsername("staff");
+			staff.setPassword("abdo");
+			staff.setEmail("staff@example.com");
+			staff.setRole(UserRole.STAFF);
+			staff.setLastLogin(LocalDateTime.now());
+			userService.saveUser(staff, admin);
+			/*
+/*
 			SystemUser librarian = new SystemUser();
 			librarian.setUsername("librarian");
 			librarian.setPassword("lib123");

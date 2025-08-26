@@ -4,6 +4,7 @@ import com.library.Library.Management.System.Challenge.entity.Author;
 import com.library.Library.Management.System.Challenge.service.AuthorService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,28 +21,28 @@ public class AuthorController {
 
     // Create Author
     @PostMapping
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
         return ResponseEntity.ok(authorService.saveAuthor(author));
     }
 
     // Get All Authors
     @GetMapping
-    // @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'STAFF','LIBRARIAN')")
     public ResponseEntity<List<Author>> getAllAuthors() {
         return ResponseEntity.ok(authorService.getAllAuthors());
     }
 
     // Get Author by ID
     @GetMapping("/{id}")
-    // @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR', 'STAFF','LIBRARIAN')")
     public ResponseEntity<Author> getAuthorById(@PathVariable Long id) {
         return ResponseEntity.ok(authorService.getAuthorById(id));
     }
 
     // Update Author
     @PutMapping("/{id}")
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMINISTRATOR','LIBRARIAN')")
     public ResponseEntity<Author> updateAuthor(
             @PathVariable Long id,
             @RequestBody Author updatedAuthor
@@ -51,7 +52,7 @@ public class AuthorController {
 
     // Delete Author
     @DeleteMapping("/{id}")
-    // @PreAuthorize("hasRole('ADMIN')")
+     @PreAuthorize("hasRole('ADMINISTRATOR')")
     public ResponseEntity<Void> deleteAuthor(@PathVariable Long id) throws BadRequestException {
         authorService.deleteAuthor(id);
         return ResponseEntity.noContent().build();

@@ -4,6 +4,7 @@ import com.library.Library.Management.System.Challenge.ResourceNotFoundException
 import com.library.Library.Management.System.Challenge.entity.Member;
 import com.library.Library.Management.System.Challenge.service.MemberService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class MemberController {
 
     //  Create a new member
     @PostMapping
-    // @PreAuthorize("hasAnyRole('ADMIN','STAFF')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','STAFF','LIBRARIAN')") // Enable security later
     public ResponseEntity<Member> createMember(@RequestBody Member member) {
         try {
             Member savedMember = memberService.saveMember(member);
@@ -34,7 +35,7 @@ public class MemberController {
 
     // Get a single member by ID
     @GetMapping("/{id}")
-    // @PreAuthorize("hasAnyRole('ADMIN','STAFF','MEMBER')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','STAFF','LIBRARIAN')") // Enable security later
     public ResponseEntity<Member> getMember(@PathVariable Long id) {
         try {
             Member member = memberService.getMemberById(id);
@@ -46,7 +47,8 @@ public class MemberController {
 
     //  Get all members
     @GetMapping
-    // @PreAuthorize("hasAnyRole('ADMIN','STAFF')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','STAFF','LIBRARIAN')") // Enable security later
+
     public ResponseEntity<List<Member>> getAllMembers() {
         List<Member> members = memberService.getAllMembers();
         return ResponseEntity.ok(members);
@@ -54,7 +56,7 @@ public class MemberController {
 
     // Update a member
     @PutMapping("/{id}")
-    // @PreAuthorize("hasAnyRole('ADMIN','STAFF')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR','STAFF','LIBRARIAN')") // Enable security later
     public ResponseEntity<Member> updateMember(
             @PathVariable Long id,
             @RequestBody Member updatedMember
@@ -69,7 +71,7 @@ public class MemberController {
 
     //  Delete a member
     @DeleteMapping("/{id}")
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR',)") // Enable security later
     public ResponseEntity<Map<String, String>> deleteMember(@PathVariable Long id) {
         try {
             memberService.deleteMember(id);

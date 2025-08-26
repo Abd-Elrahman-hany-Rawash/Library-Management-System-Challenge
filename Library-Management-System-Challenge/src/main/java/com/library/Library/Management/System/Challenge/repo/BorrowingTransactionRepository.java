@@ -14,9 +14,9 @@ import java.util.Optional;
 
 @Repository
 public interface BorrowingTransactionRepository extends JpaRepository<BorrowingTransaction, Long> {
-    List<BorrowingTransaction> findByMemberId(Long memberId);
+   // List<BorrowingTransaction> findByMemberId(Long memberId);
     List<BorrowingTransaction> findByMember(Member member);
-    Optional<BorrowingTransaction> findByBookIdAndReturnedFalse(Long bookId);
+    Optional<BorrowingTransaction> findByBookIdAndReturnedFalse(Long bookId);// For return Book BY Id
     @Modifying
     @Transactional
     @Query("DELETE FROM BorrowingTransaction t WHERE t.member.id = :memberId")

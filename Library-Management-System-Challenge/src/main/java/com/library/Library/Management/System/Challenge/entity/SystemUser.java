@@ -23,7 +23,7 @@ public class SystemUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+@Column(unique = true)
     private String username;
     private String password; // will be encrypted
     private String email;
@@ -39,9 +39,10 @@ public class SystemUser implements UserDetails {
     private List<UserActivityLog> activityLogs;
 
     // Transactions processed by this user (borrow/return)
-    @OneToMany(mappedBy = "processedBy")
-    @JsonIgnoreProperties("processedBy")
+    @OneToMany(mappedBy = "processedBy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"processedBy", "activityLogs"})
     private List<BorrowingTransaction> processedTransactions;
+
 
     // ---------------- UserDetails Implementation ----------------
 

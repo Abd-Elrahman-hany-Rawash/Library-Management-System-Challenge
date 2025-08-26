@@ -4,6 +4,7 @@ import com.library.Library.Management.System.Challenge.entity.SystemUser;
 import com.library.Library.Management.System.Challenge.service.SystemUserService;
 import org.springframework.http.ResponseEntity;
 // import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class SystemUserController {
 
     //  Get all users
     @GetMapping
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')") // Enable security later
     public ResponseEntity<List<SystemUser>> getAllUsers() {
         List<SystemUser> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
@@ -28,7 +29,7 @@ public class SystemUserController {
 
     // Get user by ID
     @GetMapping("/{id}")
-    // @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')") // Enable security later
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(userService.getUserById(id));
@@ -39,7 +40,7 @@ public class SystemUserController {
 
     //Create user
     @PostMapping
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')") // Enable security later
     public ResponseEntity<?> createUser(@RequestBody SystemUser user,
                                         @RequestParam Long adminId) {
         try {
@@ -53,7 +54,7 @@ public class SystemUserController {
 
     // Update user
     @PutMapping("/{id}")
-    // @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')") // Enable security later
     public ResponseEntity<?> updateUser(@PathVariable Long id,
                                         @RequestBody SystemUser updatedUser,
                                         @RequestParam Long adminId) {
@@ -68,7 +69,7 @@ public class SystemUserController {
 
     // Delete user
     @DeleteMapping("/{id}")
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMINISTRATOR')") // Enable security later
     public ResponseEntity<?> deleteUser(@PathVariable Long id,
                                         @RequestParam Long adminId) {
         try {

@@ -1,6 +1,6 @@
 USE library_db;
 
-/*
+
 SET FOREIGN_KEY_CHECKS = 0;
 
 TRUNCATE TABLE book_authors;
@@ -14,7 +14,7 @@ TRUNCATE TABLE system_users;
 TRUNCATE TABLE user_activity_log;
 
 SET FOREIGN_KEY_CHECKS = 1
-*/
+
 INSERT INTO authors (name) VALUES 
 ('George Orwell'),
 ('J.K. Rowling'),
